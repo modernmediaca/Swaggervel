@@ -2,7 +2,7 @@
 
 use Swagger\Swagger;
 
-Route::any(Config::get('swaggervel::app.doc-route').'/{page?}', function($page='api-docs.json') {
+Route::any(Config::get('swaggervel::app.doc-route').'/{page?}', [function($page='api-docs.json') {
     $filePath = Config::get('swaggervel::app.doc-dir') . "/{$page}";
 
     if (File::extension($filePath) === "") {
@@ -16,9 +16,9 @@ Route::any(Config::get('swaggervel::app.doc-route').'/{page?}', function($page='
     return Response::make($content, 200, array(
         'Content-Type' => 'application/json'
     ));
-});
+}]);
 
-Route::get('api-docs', function() {
+Route::get('api-docs', [function() {
     if (Config::get('swaggervel::app.generateAlways')) {
         $appDir = base_path()."/".Config::get('swaggervel::app.app-dir');
         $docDir = Config::get('swaggervel::app.doc-dir');
@@ -92,4 +92,4 @@ Route::get('api-docs', function() {
     }
 
     return $response;
-});
+}]);
